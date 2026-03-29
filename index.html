@@ -1094,8 +1094,20 @@
     document.getElementById('email-gate').style.display = 'none';
     document.getElementById('full-results').style.display = 'block';
 
-    // → koppel hier je backend / Mailchimp
-    console.log('Lead:', name, email, d);
+    fetch('https://formspree.io/f/mvzvkqpl', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify({
+        voornaam: name,
+        email: email,
+        teamgrootte: d.teamSize,
+        meetings_per_week: d.mpw,
+        gemiddeld_loon: '€ ' + d.salary,
+        waste_pct: Math.round(d.wastePct * 100) + '%',
+        jaarkost_waste: fmt(d.wasteCost),
+        totale_reele_kost: fmt(d.realCost)
+      })
+    }).catch(err => console.error('Formspree error:', err));
 
     fillAvgView();
     renderPersonTable();
