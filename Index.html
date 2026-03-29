@@ -1,0 +1,1211 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vergaderkost Calculator — Prowes</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --orange: #E8511A;
+    --green: #3DD68C;
+    --cream: #F5EFE3;
+    --black: #111111;
+    --dark: #1C1C1C;
+    --mid: #666;
+    --border: #D8D0C0;
+    --white: #FFFFFF;
+  }
+
+  html { font-size: 16px; }
+
+  body {
+    background: var(--cream);
+    color: var(--black);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    min-height: 100vh;
+  }
+
+  .topbar {
+    background: var(--black);
+    padding: 1rem 2rem;
+  }
+
+  .topbar-logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.4rem;
+    letter-spacing: 0.12em;
+    color: var(--cream);
+  }
+
+  .topbar-logo span { color: var(--orange); }
+
+  .hero {
+    background: var(--black);
+    padding: 3rem 2rem 3.5rem;
+    position: relative;
+  }
+
+  .hero::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 6px;
+    background: var(--orange);
+  }
+
+  .hero-inner { max-width: 680px; margin: 0 auto; }
+
+  .tag {
+    display: inline-block;
+    background: var(--orange);
+    color: var(--white);
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    padding: 0.35rem 0.8rem;
+    margin-bottom: 1.5rem;
+  }
+
+  h1 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(3rem, 8vw, 5.5rem);
+    letter-spacing: 0.04em;
+    line-height: 0.95;
+    color: var(--cream);
+    margin-bottom: 1.2rem;
+  }
+
+  h1 em { color: var(--orange); font-style: normal; }
+
+  .hero-sub {
+    font-size: 1rem;
+    color: #999;
+    font-weight: 300;
+    line-height: 1.5;
+    max-width: 420px;
+  }
+
+  main {
+    max-width: 680px;
+    margin: 0 auto;
+    padding: 2.5rem 2rem 5rem;
+  }
+
+  .step-indicator {
+    display: flex;
+    gap: 4px;
+    margin-bottom: 2.5rem;
+  }
+
+  .step-seg {
+    flex: 1;
+    height: 4px;
+    background: var(--border);
+    transition: background 0.3s;
+  }
+
+  .step-seg.active { background: var(--orange); }
+  .step-seg.done { background: var(--black); }
+
+  .section { display: none; animation: up 0.25s ease; }
+  .section.active { display: block; }
+
+  @keyframes up {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .block-header {
+    background: var(--black);
+    color: var(--cream);
+    padding: 1rem 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .block-header-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.4rem;
+    letter-spacing: 0.08em;
+  }
+
+  .block-header-step {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--orange);
+    letter-spacing: 0.15em;
+  }
+
+  .block-body {
+    background: var(--white);
+    border: 2px solid var(--black);
+    border-top: none;
+    padding: 1.8rem 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .block-desc {
+    font-size: 0.88rem;
+    color: var(--mid);
+    line-height: 1.6;
+    margin-bottom: 1.8rem;
+    padding-bottom: 1.2rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .field-group { display: flex; flex-direction: column; gap: 1.4rem; }
+  .field { display: flex; flex-direction: column; gap: 0.45rem; }
+
+  label {
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: var(--black);
+  }
+
+  label small {
+    display: block;
+    font-size: 0.75rem;
+    color: var(--mid);
+    font-weight: 300;
+    margin-top: 0.1rem;
+  }
+
+  .input-wrap {
+    display: flex;
+    border: 2px solid var(--black);
+    background: var(--cream);
+  }
+
+  .input-wrap:focus-within { border-color: var(--orange); }
+
+  input[type="number"] {
+    background: transparent;
+    border: none;
+    outline: none;
+    color: var(--black);
+    font-family: 'DM Mono', monospace;
+    font-size: 1.2rem;
+    padding: 0.75rem 1rem;
+    flex: 1;
+    min-width: 0;
+  }
+
+  .unit {
+    padding: 0.75rem 1rem;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.72rem;
+    color: var(--mid);
+    background: var(--border);
+    border-left: 2px solid var(--black);
+    white-space: nowrap;
+    display: flex;
+    align-items: center;
+  }
+
+  .slider-wrap { margin-top: 0.3rem; }
+
+  .slider-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 0.6rem;
+  }
+
+  .slider-big {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 3rem;
+    color: var(--orange);
+    letter-spacing: 0.04em;
+    line-height: 1;
+  }
+
+  .slider-ref { font-size: 0.72rem; color: var(--mid); font-style: italic; }
+
+  input[type="range"] {
+    -webkit-appearance: none;
+    width: 100%;
+    height: 4px;
+    background: var(--border);
+    border-radius: 0;
+    cursor: pointer;
+    outline: none;
+  }
+
+  input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 22px;
+    height: 22px;
+    background: var(--orange);
+    border: 3px solid var(--black);
+    border-radius: 0;
+    cursor: pointer;
+  }
+
+  .btn-row {
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+  }
+
+  .btn {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.75rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 1rem 2rem;
+    border: 2px solid var(--black);
+    cursor: pointer;
+    transition: all 0.15s;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+
+  .btn-primary {
+    background: var(--orange);
+    color: var(--white);
+    border-color: var(--orange);
+    flex: 1;
+    justify-content: center;
+  }
+
+  .btn-primary:hover { background: #d04010; border-color: #d04010; }
+
+  .btn-ghost {
+    background: transparent;
+    color: var(--mid);
+  }
+
+  .btn-ghost:hover { color: var(--black); }
+
+  /* RESULTS */
+  #results { display: none; }
+
+  .numbers {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2px;
+    margin-bottom: 2px;
+    background: var(--black);
+  }
+
+  .num-cell { background: var(--white); padding: 1.4rem 1.2rem; }
+  .num-cell.full { grid-column: 1 / -1; background: var(--orange); }
+  .num-cell.full .num-label { color: rgba(255,255,255,0.7); }
+  .num-cell.full .num-val { color: var(--white); }
+  .num-cell.full .num-sub { color: rgba(255,255,255,0.6); }
+
+  .num-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--mid);
+    margin-bottom: 0.4rem;
+  }
+
+  .num-val {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2.2rem;
+    letter-spacing: 0.04em;
+    color: var(--black);
+    line-height: 1;
+    margin-bottom: 0.2rem;
+  }
+
+  .num-val.big { font-size: 3rem; }
+  .num-sub { font-size: 0.75rem; color: var(--mid); line-height: 1.4; }
+
+  /* EMAIL GATE */
+  .gate {
+    background: var(--black);
+    color: var(--cream);
+    padding: 2rem 1.5rem;
+    margin-bottom: 2px;
+  }
+
+  .gate h3 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.8rem;
+    letter-spacing: 0.06em;
+    color: var(--white);
+    margin-bottom: 0.6rem;
+  }
+
+  .gate h3 span { color: var(--green); }
+
+  .gate-intro {
+    font-size: 0.85rem;
+    color: #aaa;
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+    max-width: 480px;
+  }
+
+  .gate-inputs {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-bottom: 0.75rem;
+  }
+
+  .gate-row {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+  }
+
+  input[type="text"], input[type="email"] {
+    background: #1e1e1e;
+    border: 2px solid #333;
+    color: var(--white);
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.95rem;
+    padding: 0.85rem 1rem;
+    flex: 1;
+    min-width: 160px;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+
+  input[type="text"]:focus, input[type="email"]:focus { border-color: var(--orange); }
+
+  .gate .btn-primary {
+    background: var(--green);
+    border-color: var(--green);
+    color: var(--black);
+    white-space: nowrap;
+  }
+
+  .gate .btn-primary:hover { background: #2fc07a; border-color: #2fc07a; }
+
+  .privacy { font-size: 0.7rem; color: #555; margin-top: 0.4rem; }
+  #email-error { font-size: 0.78rem; color: var(--orange); display: none; margin-top: 0.2rem; }
+
+  /* FULL RESULTS */
+  #full-results { display: none; }
+
+  /* TOGGLE */
+  .mode-toggle {
+    display: flex;
+    gap: 2px;
+    margin-bottom: 2px;
+    background: var(--black);
+  }
+
+  .toggle-btn {
+    flex: 1;
+    padding: 0.9rem 1rem;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    border: none;
+    cursor: pointer;
+    transition: all 0.15s;
+    text-align: center;
+  }
+
+  .toggle-btn.active {
+    background: var(--orange);
+    color: var(--white);
+  }
+
+  .toggle-btn:not(.active) {
+    background: #222;
+    color: #666;
+  }
+
+  .toggle-btn:not(.active):hover { color: #aaa; }
+
+  /* BARS */
+  .bars-block {
+    background: var(--white);
+    border: 2px solid var(--black);
+    border-top: none;
+    padding: 1.5rem;
+    margin-bottom: 2px;
+  }
+
+  .bar-row {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+  }
+
+  .bar-name { font-size: 0.78rem; color: var(--mid); width: 110px; flex-shrink: 0; }
+  .bar-track { flex: 1; height: 10px; background: var(--border); }
+
+  .bar-fill {
+    height: 100%;
+    width: 0;
+    transition: width 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .bar-fill.prod { background: var(--green); }
+  .bar-fill.waste { background: var(--orange); }
+  .bar-fill.hidden { background: var(--black); }
+
+  .bar-amt {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.78rem;
+    width: 75px;
+    text-align: right;
+    flex-shrink: 0;
+  }
+
+  /* PER PERSON TABLE */
+  #per-person-view { display: none; }
+
+  .person-table-wrap {
+    background: var(--white);
+    border: 2px solid var(--black);
+    border-top: none;
+    margin-bottom: 2px;
+    overflow-x: auto;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.82rem;
+  }
+
+  thead tr {
+    background: var(--black);
+    color: var(--cream);
+  }
+
+  thead th {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    padding: 0.75rem 1rem;
+    text-align: left;
+    white-space: nowrap;
+  }
+
+  tbody tr { border-bottom: 1px solid var(--border); }
+  tbody tr:last-child { border-bottom: none; }
+  tbody tr:nth-child(even) { background: var(--cream); }
+
+  tbody td {
+    padding: 0.75rem 1rem;
+    vertical-align: middle;
+  }
+
+  .td-name { font-weight: 500; }
+
+  .td-input {
+    display: flex;
+    border: 1px solid var(--border);
+    background: var(--white);
+    transition: border-color 0.15s;
+  }
+
+  .td-input:focus-within { border-color: var(--orange); }
+
+  .td-input input {
+    border: none;
+    outline: none;
+    background: transparent;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.85rem;
+    padding: 0.35rem 0.5rem;
+    width: 70px;
+    color: var(--black);
+  }
+
+  .td-unit {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.6rem;
+    color: var(--mid);
+    padding: 0 0.5rem;
+    display: flex;
+    align-items: center;
+    background: var(--border);
+    border-left: 1px solid var(--border);
+    white-space: nowrap;
+  }
+
+  .td-cost {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.85rem;
+    color: var(--orange);
+    white-space: nowrap;
+  }
+
+  .td-waste {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.85rem;
+    color: var(--black);
+  }
+
+  tfoot tr { background: var(--black); }
+
+  tfoot td {
+    padding: 0.85rem 1rem;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.8rem;
+    color: var(--cream);
+    white-space: nowrap;
+  }
+
+  tfoot td.total-val {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.4rem;
+    color: var(--orange);
+    letter-spacing: 0.04em;
+  }
+
+  /* ADD PERSON */
+  .add-person-row {
+    background: var(--cream);
+    border: 2px solid var(--black);
+    border-top: none;
+    padding: 1rem 1.5rem;
+    display: flex;
+    gap: 0.75rem;
+    align-items: center;
+    flex-wrap: wrap;
+    margin-bottom: 2px;
+  }
+
+  .add-person-row input[type="text"] {
+    background: var(--white);
+    border: 2px solid var(--black);
+    color: var(--black);
+    font-family: 'DM Sans', sans-serif;
+    padding: 0.65rem 0.9rem;
+    font-size: 0.9rem;
+    min-width: 140px;
+    flex: 1;
+  }
+
+  .add-person-row input[type="text"]:focus { border-color: var(--orange); }
+
+  .btn-add {
+    background: var(--black);
+    color: var(--cream);
+    border: 2px solid var(--black);
+    font-family: 'DM Mono', monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.1em;
+    padding: 0.65rem 1.2rem;
+    cursor: pointer;
+    white-space: nowrap;
+  }
+
+  .btn-add:hover { background: var(--orange); border-color: var(--orange); }
+
+  .btn-remove {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--border);
+    font-size: 1rem;
+    padding: 0 0.25rem;
+    transition: color 0.15s;
+  }
+
+  .btn-remove:hover { color: var(--orange); }
+
+  /* RECALC */
+  .recalc-note {
+    font-size: 0.78rem;
+    color: var(--mid);
+    font-style: italic;
+    margin-bottom: 0.75rem;
+  }
+
+  /* INSIGHT */
+  .insight-block {
+    background: var(--green);
+    padding: 1.5rem;
+    margin-bottom: 2px;
+  }
+
+  .insight-block p {
+    font-size: 0.9rem;
+    color: var(--black);
+    line-height: 1.65;
+  }
+
+  .scenario-block {
+    background: var(--black);
+    color: var(--cream);
+    padding: 1.5rem;
+    margin-bottom: 2px;
+    display: flex;
+    gap: 1.5rem;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+
+  .scenario-label {
+    font-size: 0.82rem;
+    color: #888;
+    line-height: 1.5;
+    flex: 1;
+    min-width: 180px;
+  }
+
+  .scenario-val {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2.8rem;
+    color: var(--green);
+    letter-spacing: 0.04em;
+    white-space: nowrap;
+  }
+
+  .science {
+    border: 2px solid var(--border);
+    padding: 1rem 1.2rem;
+    margin-bottom: 2px;
+  }
+
+  .science p { font-size: 0.72rem; color: var(--mid); line-height: 1.6; }
+
+  .cta-block {
+    background: var(--orange);
+    padding: 2rem 1.5rem;
+    text-align: center;
+    margin-bottom: 1.5rem;
+  }
+
+  .cta-block h3 {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2rem;
+    color: var(--white);
+    letter-spacing: 0.06em;
+    margin-bottom: 0.6rem;
+  }
+
+  .cta-block p { font-size: 0.85rem; color: rgba(255,255,255,0.75); margin-bottom: 1.2rem; }
+
+  .btn-cta {
+    background: var(--black);
+    color: var(--white);
+    border: 2px solid var(--black);
+    font-family: 'DM Mono', monospace;
+    font-size: 0.75rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 1rem 2rem;
+    cursor: pointer;
+    display: inline-block;
+    transition: all 0.15s;
+    text-decoration: none;
+  }
+
+  .btn-cta:hover { background: var(--cream); color: var(--black); }
+
+  .footer {
+    text-align: center;
+    font-size: 0.7rem;
+    color: var(--mid);
+    padding: 1rem 0 2rem;
+  }
+
+  @media (max-width: 480px) {
+    h1 { font-size: 3rem; }
+    .numbers { grid-template-columns: 1fr; }
+    .num-cell.full { grid-column: 1; }
+    .scenario-block { flex-direction: column; gap: 0.5rem; }
+    thead th:nth-child(4), tbody td:nth-child(4) { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="topbar-logo">PROW<span>ES</span></div>
+</div>
+
+<div class="hero">
+  <div class="hero-inner">
+    <div class="tag">Vergadercheck</div>
+    <h1>WAT KOST<br>VERGADEREN<br><em>ECHT?</em></h1>
+    <p class="hero-sub">Niet vaag. In euro's. Onderbouwd door onderzoek van Rogelberg, Gloria Mark en anderen.</p>
+  </div>
+</div>
+
+<main>
+  <div class="step-indicator">
+    <div class="step-seg active" id="seg-1"></div>
+    <div class="step-seg" id="seg-2"></div>
+    <div class="step-seg" id="seg-3"></div>
+  </div>
+
+  <!-- STEP 1 -->
+  <div class="section active" id="step-1">
+    <div class="block-header">
+      <div class="block-header-title">HOEVEEL WORDT ER VERGADERD?</div>
+      <div class="block-header-step">01 / 02</div>
+    </div>
+    <div class="block-body">
+      <p class="block-desc">Vul in wat van toepassing is voor jouw team of afdeling. Schattingen zijn goed genoeg — de orde van grootte telt.</p>
+      <div class="field-group">
+        <div class="field">
+          <label>Aantal teamleden
+            <small>Iedereen die regelmatig in meetings zit (incl. jezelf)</small>
+          </label>
+          <div class="input-wrap">
+            <input type="number" id="team-size" min="1" max="500" value="8" />
+            <div class="unit">personen</div>
+          </div>
+        </div>
+        <div class="field">
+          <label>Meetings per persoon per week
+            <small>Gemiddelde over je team — kenniswerker zit op 8–12</small>
+          </label>
+          <div class="input-wrap">
+            <input type="number" id="meetings-per-week" min="1" max="50" value="10" />
+            <div class="unit">meetings/week</div>
+          </div>
+        </div>
+        <div class="field">
+          <label>Gemiddelde duur per meeting
+            <small>Meest voorkomende duur in jouw organisatie</small>
+          </label>
+          <div class="input-wrap">
+            <input type="number" id="meeting-duration" min="15" max="240" value="45" />
+            <div class="unit">minuten</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="btn-row">
+      <button class="btn btn-primary" onclick="goToStep(2)">Verder →</button>
+    </div>
+  </div>
+
+  <!-- STEP 2 -->
+  <div class="section" id="step-2">
+    <div class="block-header">
+      <div class="block-header-title">WAT KOST EEN UUR?</div>
+      <div class="block-header-step">02 / 02</div>
+    </div>
+    <div class="block-body">
+      <p class="block-desc">We rekenen met de volledig beladen kost: bruto loon × 1.35 werkgeverslast. Geen verborgen parameters.</p>
+      <div class="field-group">
+        <div class="field">
+          <label>Gemiddeld bruto maandloon
+            <small>Jouw beste schatting voor de functies die in meetings zitten</small>
+          </label>
+          <div class="input-wrap">
+            <input type="number" id="monthly-salary" min="1000" max="20000" value="4200" />
+            <div class="unit">€ / maand</div>
+          </div>
+        </div>
+        <div class="field">
+          <label>% meetings dat je eerlijk als nutteloos beschouwt
+            <small>Internationaal gemiddelde: 71% van managers vindt meetings onproductief. Wees eerlijk.</small>
+          </label>
+          <div class="slider-wrap">
+            <div class="slider-top">
+              <div class="slider-big" id="waste-display">35%</div>
+              <div class="slider-ref">HBR / Rogelberg: gem. ~35%</div>
+            </div>
+            <input type="range" id="waste-pct" min="5" max="90" value="35"
+              oninput="document.getElementById('waste-display').textContent = this.value + '%'" />
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="btn-row">
+      <button class="btn btn-ghost" onclick="goToStep(1)">← Terug</button>
+      <button class="btn btn-primary" onclick="calculateAndShow()">Bereken →</button>
+    </div>
+  </div>
+
+  <!-- RESULTS -->
+  <div id="results">
+    <div class="block-header" style="margin-bottom:2px;">
+      <div class="block-header-title">JOUW VERGADERKOST</div>
+      <div class="block-header-step">RESULTAAT</div>
+    </div>
+
+    <div class="numbers">
+      <div class="num-cell">
+        <div class="num-label">Vergadertijd / persoon / jaar</div>
+        <div class="num-val" id="res-hours">—</div>
+        <div class="num-sub">uur per medewerker</div>
+      </div>
+      <div class="num-cell">
+        <div class="num-label">Directe loonkost vergaderingen</div>
+        <div class="num-val" id="res-total-cost">—</div>
+        <div class="num-sub">voor het volledige team per jaar</div>
+      </div>
+      <div class="num-cell full">
+        <div class="num-label">Nutteloze vergaderkost — per jaar verbrand</div>
+        <div class="num-val big" id="res-waste-cost">—</div>
+        <div class="num-sub" id="res-waste-sub">Rechtstreeks uit je loonmassa</div>
+      </div>
+    </div>
+
+    <!-- EMAIL GATE -->
+    <div class="gate" id="email-gate">
+      <h3>DE ECHTE KOST<br>LIGT <span>HOGER.</span></h3>
+      <p class="gate-intro">Contextswitching en herstelkosten zitten hier nog niet in. Onderzoek toont dat dit de zichtbare kost nog eens verdubbelt.<br><br>Achter je e-mailadres krijg je de volledige analyse — inclusief de verborgen kost én de optie om per teamlid exact te berekenen wat het vergaderen kost.</p>
+      <div class="gate-inputs">
+        <div class="gate-row">
+          <input type="text" id="user-name" placeholder="Voornaam" />
+          <input type="email" id="user-email" placeholder="Werk e-mailadres" />
+        </div>
+        <div class="gate-row">
+          <button class="btn btn-primary" style="flex:1;" onclick="submitEmail()">Stuur mij de volledige analyse →</button>
+        </div>
+      </div>
+      <p id="email-error">Vul een geldig e-mailadres in.</p>
+      <p class="privacy">Geen spam. Geen automatische nieuwsbrief. Je gegevens worden niet verkocht.</p>
+    </div>
+
+    <!-- FULL RESULTS -->
+    <div id="full-results">
+
+      <!-- MODE TOGGLE -->
+      <div class="mode-toggle">
+        <button class="toggle-btn active" id="toggle-avg" onclick="switchMode('avg')">Gemiddeld overzicht</button>
+        <button class="toggle-btn" id="toggle-person" onclick="switchMode('person')">Per teamlid</button>
+      </div>
+
+      <!-- AVERAGE VIEW -->
+      <div id="avg-view">
+        <div class="block-header" style="margin-bottom:2px;">
+          <div class="block-header-title">ANALYSE</div>
+          <div class="block-header-step">GEMIDDELD</div>
+        </div>
+
+        <div class="bars-block">
+          <div class="num-label" style="margin-bottom:1.2rem;">Jaarlijkse vergaderkost — uitsplitsing</div>
+          <div class="bar-row">
+            <div class="bar-name">Productieve kost</div>
+            <div class="bar-track"><div class="bar-fill prod" id="bar-prod"></div></div>
+            <div class="bar-amt" id="bar-prod-amt">—</div>
+          </div>
+          <div class="bar-row">
+            <div class="bar-name">Zichtbare waste</div>
+            <div class="bar-track"><div class="bar-fill waste" id="bar-waste"></div></div>
+            <div class="bar-amt" id="bar-waste-amt">—</div>
+          </div>
+          <div class="bar-row">
+            <div class="bar-name">Verborgen kost*</div>
+            <div class="bar-track"><div class="bar-fill hidden" id="bar-hidden"></div></div>
+            <div class="bar-amt" id="bar-hidden-amt">—</div>
+          </div>
+          <p style="font-size:0.7rem;color:var(--mid);margin-top:0.75rem;">* Contextswitching + cognitieve herstelkosten (Gloria Mark, UC Irvine / Rogelberg)</p>
+        </div>
+
+        <div class="numbers" style="margin-bottom:2px;">
+          <div class="num-cell">
+            <div class="num-label">Context-switch kost / jaar</div>
+            <div class="num-val" id="res-switch">—</div>
+            <div class="num-sub">23 min herstel per meeting (Gloria Mark)</div>
+          </div>
+          <div class="num-cell">
+            <div class="num-label">Totale reële vergaderkost</div>
+            <div class="num-val" id="res-real">—</div>
+            <div class="num-sub">incl. verborgen kost</div>
+          </div>
+        </div>
+
+        <div class="scenario-block">
+          <div class="scenario-label">
+            <strong style="color:var(--cream);">Wat als 20% van de nutteloze meetings wegvalt?</strong><br>
+            Vrijgemaakt per jaar — herinvesteerbaar in wat echt telt.
+          </div>
+          <div class="scenario-val" id="res-scenario">—</div>
+        </div>
+
+        <div class="insight-block">
+          <p id="insight-text">—</p>
+        </div>
+      </div>
+
+      <!-- PER PERSON VIEW -->
+      <div id="per-person-view">
+        <div class="block-header" style="margin-bottom:2px;">
+          <div class="block-header-title">ANALYSE PER TEAMLID</div>
+          <div class="block-header-step">GEDETAILLEERD</div>
+        </div>
+
+        <div style="background:var(--white);border:2px solid var(--black);border-top:none;padding:1.2rem 1.5rem;margin-bottom:2px;">
+          <p style="font-size:0.85rem;color:var(--mid);line-height:1.6;">Pas per teamlid het bruto maandloon en het aantal vergaderuren per week aan. De tool berekent de individuele kost — inclusief contextswitching en verborgen kost.</p>
+        </div>
+
+        <div class="add-person-row">
+          <input type="text" id="new-person-name" placeholder="Naam teamlid" />
+          <button class="btn-add" onclick="addPerson()">+ Voeg toe</button>
+        </div>
+
+        <div class="person-table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Naam</th>
+                <th>Loon / maand</th>
+                <th>Meetinguren / week</th>
+                <th>Jaarkost meetings</th>
+                <th>Waste</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody id="person-tbody"></tbody>
+            <tfoot>
+              <tr>
+                <td colspan="3" style="color:#aaa;font-size:0.65rem;letter-spacing:0.15em;">TEAM TOTAAL</td>
+                <td class="total-val" id="person-total-cost">—</td>
+                <td class="total-val" id="person-total-waste" style="color:var(--orange);">—</td>
+                <td></td>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+
+        <div class="numbers" style="margin-bottom:2px;margin-top:2px;">
+          <div class="num-cell">
+            <div class="num-label">Context-switch kost team</div>
+            <div class="num-val" id="person-switch">—</div>
+            <div class="num-sub">gebaseerd op individuele meetingfrequentie</div>
+          </div>
+          <div class="num-cell">
+            <div class="num-label">Totale reële kost team</div>
+            <div class="num-val" id="person-real">—</div>
+            <div class="num-sub">incl. verborgen kost</div>
+          </div>
+          <div class="num-cell full">
+            <div class="num-label">Potentiële besparing bij 20% minder waste</div>
+            <div class="num-val big" id="person-scenario">—</div>
+            <div class="num-sub">vrijgemaakt per jaar</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SHARED BOTTOM -->
+      <div class="science">
+        <p><strong>Onderbouwing:</strong> Vergaderkost = bruto uurloon × 1.35 werkgeverslast × totale vergadertijd (46 werkweken). Context-switch kost gebaseerd op Gloria Mark (UC Irvine): gemiddeld 23 minuten om na een onderbreking terug in diepe focus te komen. Verborgen kostmultiplier (0.5× bovenop de waste) gebaseerd op Rogelberg et al. over cognitieve en innovatiekosten van meeting-overload. % nutteloze meetings: standaard 35%; 71% van managers vindt meetings onproductief (Harvard Business Review / Rogelberg 2019).</p>
+      </div>
+
+      <div class="cta-block">
+        <h3>MEETINGS KOSTEN JE MEER DAN JE DENKT.</h3>
+        <p>Prowes helpt teamleads beslissen wat overleg verdient en wat niet — zodat meetings weer leiden tot actie.</p>
+        <a href="https://prowes.be" target="_blank" class="btn-cta">Ontdek hoe Prowes helpt →</a>
+      </div>
+    </div>
+
+    <div style="margin-top:0.75rem;">
+      <button class="btn btn-ghost" onclick="resetCalc()">← Opnieuw berekenen</button>
+    </div>
+  </div>
+
+  <div class="footer">Prowes — Viktorien Banić &nbsp;·&nbsp; Berekeningen gebaseerd op wetenschappelijk onderzoek</div>
+</main>
+
+<script>
+  let d = {};
+  let persons = [];
+
+  const fmt = n => '€\u202F' + Math.round(n).toLocaleString('nl-BE');
+
+  function hrRate(monthlySalary) {
+    return (monthlySalary * 13.92 * 1.35) / (52 * 38);
+  }
+
+  function personYearlyCost(salary, meetingHoursPerWeek) {
+    return hrRate(salary) * meetingHoursPerWeek * 46;
+  }
+
+  function personSwitchCost(salary, meetingsPerWeek) {
+    const mpY = meetingsPerWeek * 46;
+    return hrRate(salary) * (mpY * 23 / 60);
+  }
+
+  function goToStep(n) {
+    document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+    document.getElementById('results').style.display = 'none';
+    if (n <= 2) document.getElementById('step-' + n).classList.add('active');
+    ['seg-1','seg-2','seg-3'].forEach((id, i) => {
+      const el = document.getElementById(id);
+      el.classList.remove('active','done');
+      if (i + 1 < n) el.classList.add('done');
+      else if (i + 1 === n) el.classList.add('active');
+    });
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function calculateAndShow() {
+    const teamSize = +document.getElementById('team-size').value || 8;
+    const mpw = +document.getElementById('meetings-per-week').value || 10;
+    const dur = +document.getElementById('meeting-duration').value || 45;
+    const salary = +document.getElementById('monthly-salary').value || 4200;
+    const wastePct = +document.getElementById('waste-pct').value / 100 || 0.35;
+
+    const weeklyH = (mpw * dur) / 60;
+    const yearlyH = weeklyH * 46;
+    const rate = hrRate(salary);
+    const totalCost = yearlyH * teamSize * rate;
+    const wasteCost = totalCost * wastePct;
+    const prodCost = totalCost - wasteCost;
+    const mpY = mpw * 46;
+    const switchCost = (mpY * 23 / 60) * teamSize * rate;
+    const hiddenCost = wasteCost * 0.5;
+    const realCost = totalCost + hiddenCost + switchCost;
+    const scenario = (wasteCost + switchCost) * 0.2;
+
+    d = { teamSize, mpw, dur, salary, wastePct, yearlyH, totalCost, wasteCost, prodCost, switchCost, hiddenCost, realCost, scenario, rate, mpY };
+
+    // Pre-populate persons with average data
+    persons = [];
+    for (let i = 1; i <= teamSize; i++) {
+      persons.push({ name: 'Teamlid ' + i, salary: salary, meetingH: weeklyH });
+    }
+
+    // Show results
+    document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+    ['seg-1','seg-2'].forEach(id => { document.getElementById(id).classList.remove('active'); document.getElementById(id).classList.add('done'); });
+    document.getElementById('seg-3').classList.add('active');
+    document.getElementById('results').style.display = 'block';
+
+    document.getElementById('res-hours').textContent = Math.round(d.yearlyH) + ' uur';
+    document.getElementById('res-total-cost').textContent = fmt(d.totalCost);
+    document.getElementById('res-waste-cost').textContent = fmt(d.wasteCost);
+    document.getElementById('res-waste-sub').textContent = `${Math.round(wastePct * 100)}% van de vergadertijd — elk jaar opnieuw`;
+
+    document.getElementById('results').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  function submitEmail() {
+    const name = document.getElementById('user-name').value.trim();
+    const email = document.getElementById('user-email').value.trim();
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      document.getElementById('email-error').style.display = 'block';
+      return;
+    }
+    document.getElementById('email-error').style.display = 'none';
+    document.getElementById('email-gate').style.display = 'none';
+    document.getElementById('full-results').style.display = 'block';
+
+    // → koppel hier je backend / Mailchimp
+    console.log('Lead:', name, email, d);
+
+    fillAvgView();
+    renderPersonTable();
+    document.getElementById('full-results').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  function fillAvgView() {
+    const total = d.prodCost + d.wasteCost + d.hiddenCost + d.switchCost;
+    setTimeout(() => {
+      document.getElementById('bar-prod').style.width = (d.prodCost / total * 100) + '%';
+      document.getElementById('bar-waste').style.width = (d.wasteCost / total * 100) + '%';
+      document.getElementById('bar-hidden').style.width = ((d.hiddenCost + d.switchCost) / total * 100) + '%';
+    }, 80);
+
+    document.getElementById('bar-prod-amt').textContent = fmt(d.prodCost);
+    document.getElementById('bar-waste-amt').textContent = fmt(d.wasteCost);
+    document.getElementById('bar-hidden-amt').textContent = fmt(d.hiddenCost + d.switchCost);
+    document.getElementById('res-switch').textContent = fmt(d.switchCost);
+    document.getElementById('res-real').textContent = fmt(d.realCost);
+    document.getElementById('res-scenario').textContent = fmt(d.scenario);
+
+    const switchHpp = Math.round(d.mpY * 23 / 60);
+    document.getElementById('insight-text').textContent =
+      `Elke meeting onderbreekt. Gloria Mark (UC Irvine) toonde aan dat het gemiddeld 23 minuten kost om daarna terug op volle concentratie te zitten. Met ${Math.round(d.mpY)} meetings per persoon per jaar verliest elk teamlid ${switchHpp} extra uren aan herstel — boven op de meetingduur zelf. De vraag is niet of vergaderen kost. De vraag is of het oplevert wat het kost.`;
+  }
+
+  function renderPersonTable() {
+    const tbody = document.getElementById('person-tbody');
+    tbody.innerHTML = '';
+
+    let totalCost = 0, totalWaste = 0, totalSwitch = 0;
+
+    persons.forEach((p, idx) => {
+      const yearlyCost = personYearlyCost(p.salary, p.meetingH);
+      const waste = yearlyCost * d.wastePct;
+      const mpwEst = p.meetingH / (d.dur / 60); // meetings/week estimate
+      const sw = personSwitchCost(p.salary, mpwEst);
+      totalCost += yearlyCost;
+      totalWaste += waste;
+      totalSwitch += sw;
+
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td class="td-name">${p.name}</td>
+        <td>
+          <div class="td-input">
+            <input type="number" value="${p.salary}" min="1000" max="20000"
+              onchange="updatePerson(${idx}, 'salary', this.value)" />
+            <div class="td-unit">€/mnd</div>
+          </div>
+        </td>
+        <td>
+          <div class="td-input">
+            <input type="number" value="${p.meetingH.toFixed(1)}" min="0.5" max="40" step="0.5"
+              onchange="updatePerson(${idx}, 'meetingH', this.value)" />
+            <div class="td-unit">u/week</div>
+          </div>
+        </td>
+        <td class="td-cost">${fmt(yearlyCost)}</td>
+        <td class="td-waste">${fmt(waste)}</td>
+        <td><button class="btn-remove" onclick="removePerson(${idx})" title="Verwijder">×</button></td>
+      `;
+      tbody.appendChild(tr);
+    });
+
+    document.getElementById('person-total-cost').textContent = fmt(totalCost);
+    document.getElementById('person-total-waste').textContent = fmt(totalWaste);
+
+    const hidden = totalWaste * 0.5;
+    const real = totalCost + hidden + totalSwitch;
+    const scenario = (totalWaste + totalSwitch) * 0.2;
+
+    document.getElementById('person-switch').textContent = fmt(totalSwitch);
+    document.getElementById('person-real').textContent = fmt(real);
+    document.getElementById('person-scenario').textContent = fmt(scenario);
+  }
+
+  function updatePerson(idx, field, val) {
+    persons[idx][field] = parseFloat(val) || persons[idx][field];
+    renderPersonTable();
+  }
+
+  function removePerson(idx) {
+    persons.splice(idx, 1);
+    renderPersonTable();
+  }
+
+  function addPerson() {
+    const nameInput = document.getElementById('new-person-name');
+    const name = nameInput.value.trim() || ('Teamlid ' + (persons.length + 1));
+    persons.push({ name, salary: d.salary, meetingH: d.yearlyH / 46 });
+    nameInput.value = '';
+    renderPersonTable();
+  }
+
+  function switchMode(mode) {
+    document.getElementById('toggle-avg').classList.toggle('active', mode === 'avg');
+    document.getElementById('toggle-person').classList.toggle('active', mode === 'person');
+    document.getElementById('avg-view').style.display = mode === 'avg' ? 'block' : 'none';
+    document.getElementById('per-person-view').style.display = mode === 'person' ? 'block' : 'none';
+    if (mode === 'person') renderPersonTable();
+  }
+
+  function resetCalc() {
+    document.getElementById('results').style.display = 'none';
+    document.getElementById('full-results').style.display = 'none';
+    document.getElementById('email-gate').style.display = 'block';
+    switchMode('avg');
+    goToStep(1);
+  }
+</script>
+</body>
+</html>
