@@ -2,9 +2,9 @@
 <html lang="nl">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 <title>Vergaderkost Calculator — Prowes</title>
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -13,7 +13,6 @@
     --green: #3DD68C;
     --cream: #F5EFE3;
     --black: #111111;
-    --dark: #1C1C1C;
     --mid: #666;
     --border: #D8D0C0;
     --white: #FFFFFF;
@@ -27,25 +26,29 @@
     font-family: 'DM Sans', sans-serif;
     font-weight: 300;
     min-height: 100vh;
+    overflow-x: hidden;
+    width: 100%;
   }
 
+  /* TOPBAR */
   .topbar {
     background: var(--black);
-    padding: 1rem 2rem;
+    padding: 0.9rem 1.25rem;
   }
 
   .topbar-logo {
     font-family: 'Bebas Neue', sans-serif;
-    font-size: 1.4rem;
+    font-size: 1.3rem;
     letter-spacing: 0.12em;
     color: var(--cream);
   }
 
   .topbar-logo span { color: var(--orange); }
 
+  /* HERO */
   .hero {
     background: var(--black);
-    padding: 3rem 2rem 3.5rem;
+    padding: 2rem 1.25rem 2.5rem;
     position: relative;
   }
 
@@ -53,53 +56,53 @@
     content: '';
     position: absolute;
     bottom: 0; left: 0; right: 0;
-    height: 6px;
+    height: 5px;
     background: var(--orange);
   }
-
-  .hero-inner { max-width: 680px; margin: 0 auto; }
 
   .tag {
     display: inline-block;
     background: var(--orange);
     color: var(--white);
     font-family: 'DM Mono', monospace;
-    font-size: 0.65rem;
+    font-size: 0.6rem;
     letter-spacing: 0.2em;
     text-transform: uppercase;
-    padding: 0.35rem 0.8rem;
-    margin-bottom: 1.5rem;
+    padding: 0.3rem 0.7rem;
+    margin-bottom: 1.2rem;
   }
 
   h1 {
     font-family: 'Bebas Neue', sans-serif;
-    font-size: clamp(3rem, 8vw, 5.5rem);
+    font-size: 3.2rem;
     letter-spacing: 0.04em;
     line-height: 0.95;
     color: var(--cream);
-    margin-bottom: 1.2rem;
+    margin-bottom: 1rem;
   }
 
   h1 em { color: var(--orange); font-style: normal; }
 
   .hero-sub {
-    font-size: 1rem;
+    font-size: 0.88rem;
     color: #999;
     font-weight: 300;
     line-height: 1.5;
-    max-width: 420px;
   }
 
+  /* MAIN */
   main {
-    max-width: 680px;
+    padding: 1.5rem 1.25rem 4rem;
+    width: 100%;
+    max-width: 600px;
     margin: 0 auto;
-    padding: 2.5rem 2rem 5rem;
   }
 
+  /* STEPS */
   .step-indicator {
     display: flex;
     gap: 4px;
-    margin-bottom: 2.5rem;
+    margin-bottom: 2rem;
   }
 
   .step-seg {
@@ -116,14 +119,15 @@
   .section.active { display: block; }
 
   @keyframes up {
-    from { opacity: 0; transform: translateY(10px); }
+    from { opacity: 0; transform: translateY(8px); }
     to { opacity: 1; transform: translateY(0); }
   }
 
+  /* BLOCK */
   .block-header {
     background: var(--black);
     color: var(--cream);
-    padding: 1rem 1.5rem;
+    padding: 0.85rem 1.25rem;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -131,36 +135,39 @@
 
   .block-header-title {
     font-family: 'Bebas Neue', sans-serif;
-    font-size: 1.4rem;
+    font-size: 1.25rem;
     letter-spacing: 0.08em;
   }
 
   .block-header-step {
     font-family: 'DM Mono', monospace;
-    font-size: 0.65rem;
+    font-size: 0.6rem;
     color: var(--orange);
     letter-spacing: 0.15em;
+    flex-shrink: 0;
+    margin-left: 0.5rem;
   }
 
   .block-body {
     background: var(--white);
     border: 2px solid var(--black);
     border-top: none;
-    padding: 1.8rem 1.5rem;
-    margin-bottom: 1.5rem;
+    padding: 1.5rem 1.25rem;
+    margin-bottom: 1.25rem;
   }
 
   .block-desc {
-    font-size: 0.88rem;
+    font-size: 0.85rem;
     color: var(--mid);
     line-height: 1.6;
-    margin-bottom: 1.8rem;
-    padding-bottom: 1.2rem;
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
     border-bottom: 1px solid var(--border);
   }
 
-  .field-group { display: flex; flex-direction: column; gap: 1.4rem; }
-  .field { display: flex; flex-direction: column; gap: 0.45rem; }
+  /* FIELDS */
+  .field-group { display: flex; flex-direction: column; gap: 1.25rem; }
+  .field { display: flex; flex-direction: column; gap: 0.4rem; }
 
   label {
     font-size: 0.85rem;
@@ -170,7 +177,7 @@
 
   label small {
     display: block;
-    font-size: 0.75rem;
+    font-size: 0.72rem;
     color: var(--mid);
     font-weight: 300;
     margin-top: 0.1rem;
@@ -190,16 +197,20 @@
     outline: none;
     color: var(--black);
     font-family: 'DM Mono', monospace;
-    font-size: 1.2rem;
-    padding: 0.75rem 1rem;
+    font-size: 1.3rem;
+    padding: 0.8rem 1rem;
     flex: 1;
     min-width: 0;
+    -moz-appearance: textfield;
   }
 
+  input[type="number"]::-webkit-outer-spin-button,
+  input[type="number"]::-webkit-inner-spin-button { -webkit-appearance: none; }
+
   .unit {
-    padding: 0.75rem 1rem;
+    padding: 0.8rem 0.75rem;
     font-family: 'DM Mono', monospace;
-    font-size: 0.72rem;
+    font-size: 0.65rem;
     color: var(--mid);
     background: var(--border);
     border-left: 2px solid var(--black);
@@ -208,13 +219,14 @@
     align-items: center;
   }
 
+  /* SLIDER */
   .slider-wrap { margin-top: 0.3rem; }
 
   .slider-top {
     display: flex;
     justify-content: space-between;
     align-items: baseline;
-    margin-bottom: 0.6rem;
+    margin-bottom: 0.5rem;
   }
 
   .slider-big {
@@ -225,12 +237,12 @@
     line-height: 1;
   }
 
-  .slider-ref { font-size: 0.72rem; color: var(--mid); font-style: italic; }
+  .slider-ref { font-size: 0.7rem; color: var(--mid); font-style: italic; }
 
   input[type="range"] {
     -webkit-appearance: none;
     width: 100%;
-    height: 4px;
+    height: 6px;
     background: var(--border);
     border-radius: 0;
     cursor: pointer;
@@ -239,32 +251,34 @@
 
   input[type="range"]::-webkit-slider-thumb {
     -webkit-appearance: none;
-    width: 22px;
-    height: 22px;
+    width: 28px;
+    height: 28px;
     background: var(--orange);
     border: 3px solid var(--black);
     border-radius: 0;
     cursor: pointer;
   }
 
+  /* BUTTONS */
   .btn-row {
     display: flex;
-    gap: 0.75rem;
-    flex-wrap: wrap;
+    gap: 0.6rem;
   }
 
   .btn {
     font-family: 'DM Mono', monospace;
-    font-size: 0.75rem;
-    letter-spacing: 0.12em;
+    font-size: 0.72rem;
+    letter-spacing: 0.1em;
     text-transform: uppercase;
-    padding: 1rem 2rem;
+    padding: 1rem 1.25rem;
     border: 2px solid var(--black);
     cursor: pointer;
     transition: all 0.15s;
     display: inline-flex;
     align-items: center;
-    gap: 0.4rem;
+    justify-content: center;
+    gap: 0.3rem;
+    -webkit-tap-highlight-color: transparent;
   }
 
   .btn-primary {
@@ -272,61 +286,67 @@
     color: var(--white);
     border-color: var(--orange);
     flex: 1;
-    justify-content: center;
   }
 
-  .btn-primary:hover { background: #d04010; border-color: #d04010; }
+  .btn-primary:active { background: #c73e10; }
 
   .btn-ghost {
     background: transparent;
     color: var(--mid);
+    padding: 1rem 0.9rem;
   }
-
-  .btn-ghost:hover { color: var(--black); }
 
   /* RESULTS */
   #results { display: none; }
 
+  /* NUMBER CELLS — stacked on mobile */
   .numbers {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
+    display: flex;
+    flex-direction: column;
     gap: 2px;
     margin-bottom: 2px;
-    background: var(--black);
   }
 
-  .num-cell { background: var(--white); padding: 1.4rem 1.2rem; }
-  .num-cell.full { grid-column: 1 / -1; background: var(--orange); }
-  .num-cell.full .num-label { color: rgba(255,255,255,0.7); }
-  .num-cell.full .num-val { color: var(--white); }
-  .num-cell.full .num-sub { color: rgba(255,255,255,0.6); }
+  .num-cell {
+    background: var(--white);
+    padding: 1.25rem;
+    border: 2px solid var(--black);
+  }
+
+  .num-cell.highlight {
+    background: var(--orange);
+  }
+
+  .num-cell.highlight .num-label { color: rgba(255,255,255,0.7); }
+  .num-cell.highlight .num-val { color: var(--white); }
+  .num-cell.highlight .num-sub { color: rgba(255,255,255,0.65); }
 
   .num-label {
     font-family: 'DM Mono', monospace;
-    font-size: 0.6rem;
+    font-size: 0.58rem;
     letter-spacing: 0.2em;
     text-transform: uppercase;
     color: var(--mid);
-    margin-bottom: 0.4rem;
+    margin-bottom: 0.35rem;
   }
 
   .num-val {
     font-family: 'Bebas Neue', sans-serif;
-    font-size: 2.2rem;
+    font-size: 2.4rem;
     letter-spacing: 0.04em;
     color: var(--black);
     line-height: 1;
     margin-bottom: 0.2rem;
   }
 
-  .num-val.big { font-size: 3rem; }
+  .num-val.big { font-size: 3.2rem; }
   .num-sub { font-size: 0.75rem; color: var(--mid); line-height: 1.4; }
 
   /* EMAIL GATE */
   .gate {
     background: var(--black);
     color: var(--cream);
-    padding: 2rem 1.5rem;
+    padding: 1.5rem 1.25rem;
     margin-bottom: 2px;
   }
 
@@ -335,7 +355,8 @@
     font-size: 1.8rem;
     letter-spacing: 0.06em;
     color: var(--white);
-    margin-bottom: 0.6rem;
+    line-height: 1.05;
+    margin-bottom: 0.75rem;
   }
 
   .gate h3 span { color: var(--green); }
@@ -344,21 +365,14 @@
     font-size: 0.85rem;
     color: #aaa;
     line-height: 1.6;
-    margin-bottom: 1.5rem;
-    max-width: 480px;
+    margin-bottom: 1.25rem;
   }
 
   .gate-inputs {
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
-    margin-bottom: 0.75rem;
-  }
-
-  .gate-row {
-    display: flex;
-    gap: 0.5rem;
-    flex-wrap: wrap;
+    margin-bottom: 0.6rem;
   }
 
   input[type="text"], input[type="email"] {
@@ -366,12 +380,13 @@
     border: 2px solid #333;
     color: var(--white);
     font-family: 'DM Sans', sans-serif;
-    font-size: 0.95rem;
-    padding: 0.85rem 1rem;
-    flex: 1;
-    min-width: 160px;
+    font-size: 1rem;
+    padding: 0.9rem 1rem;
+    width: 100%;
     outline: none;
     transition: border-color 0.2s;
+    -webkit-appearance: none;
+    border-radius: 0;
   }
 
   input[type="text"]:focus, input[type="email"]:focus { border-color: var(--orange); }
@@ -380,12 +395,14 @@
     background: var(--green);
     border-color: var(--green);
     color: var(--black);
-    white-space: nowrap;
+    font-size: 0.7rem;
+    padding: 1rem;
+    width: 100%;
   }
 
-  .gate .btn-primary:hover { background: #2fc07a; border-color: #2fc07a; }
+  .gate .btn-primary:active { background: #2ab876; }
 
-  .privacy { font-size: 0.7rem; color: #555; margin-top: 0.4rem; }
+  .privacy { font-size: 0.68rem; color: #555; margin-top: 0.4rem; line-height: 1.5; }
   #email-error { font-size: 0.78rem; color: var(--orange); display: none; margin-top: 0.2rem; }
 
   /* FULL RESULTS */
@@ -401,46 +418,38 @@
 
   .toggle-btn {
     flex: 1;
-    padding: 0.9rem 1rem;
+    padding: 0.85rem 0.5rem;
     font-family: 'DM Mono', monospace;
-    font-size: 0.72rem;
-    letter-spacing: 0.1em;
+    font-size: 0.65rem;
+    letter-spacing: 0.08em;
     text-transform: uppercase;
     border: none;
     cursor: pointer;
     transition: all 0.15s;
     text-align: center;
+    -webkit-tap-highlight-color: transparent;
   }
 
-  .toggle-btn.active {
-    background: var(--orange);
-    color: var(--white);
-  }
-
-  .toggle-btn:not(.active) {
-    background: #222;
-    color: #666;
-  }
-
-  .toggle-btn:not(.active):hover { color: #aaa; }
+  .toggle-btn.active { background: var(--orange); color: var(--white); }
+  .toggle-btn:not(.active) { background: #222; color: #666; }
 
   /* BARS */
   .bars-block {
     background: var(--white);
     border: 2px solid var(--black);
     border-top: none;
-    padding: 1.5rem;
+    padding: 1.25rem;
     margin-bottom: 2px;
   }
 
   .bar-row {
     display: flex;
     align-items: center;
-    gap: 1rem;
-    margin-bottom: 1rem;
+    gap: 0.75rem;
+    margin-bottom: 0.9rem;
   }
 
-  .bar-name { font-size: 0.78rem; color: var(--mid); width: 110px; flex-shrink: 0; }
+  .bar-name { font-size: 0.75rem; color: var(--mid); width: 90px; flex-shrink: 0; }
   .bar-track { flex: 1; height: 10px; background: var(--border); }
 
   .bar-fill {
@@ -455,127 +464,176 @@
 
   .bar-amt {
     font-family: 'DM Mono', monospace;
-    font-size: 0.78rem;
-    width: 75px;
+    font-size: 0.72rem;
+    width: 62px;
     text-align: right;
     flex-shrink: 0;
+    color: var(--black);
   }
 
-  /* PER PERSON TABLE */
+  /* INSIGHT */
+  .insight-block {
+    background: var(--green);
+    padding: 1.25rem;
+    margin-bottom: 2px;
+  }
+
+  .insight-block p {
+    font-size: 0.88rem;
+    color: var(--black);
+    line-height: 1.65;
+  }
+
+  /* SCENARIO */
+  .scenario-block {
+    background: var(--black);
+    padding: 1.25rem;
+    margin-bottom: 2px;
+  }
+
+  .scenario-label {
+    font-size: 0.82rem;
+    color: #888;
+    line-height: 1.5;
+    margin-bottom: 0.5rem;
+  }
+
+  .scenario-label strong { color: var(--cream); }
+
+  .scenario-val {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 3rem;
+    color: var(--green);
+    letter-spacing: 0.04em;
+    line-height: 1;
+  }
+
+  /* PER PERSON — cards instead of table */
   #per-person-view { display: none; }
 
-  .person-table-wrap {
+  .person-cards {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    margin-bottom: 2px;
+  }
+
+  .person-card {
     background: var(--white);
     border: 2px solid var(--black);
-    border-top: none;
-    margin-bottom: 2px;
-    overflow-x: auto;
+    padding: 1.1rem 1.25rem;
   }
 
-  table {
-    width: 100%;
-    border-collapse: collapse;
-    font-size: 0.82rem;
-  }
-
-  thead tr {
-    background: var(--black);
-    color: var(--cream);
-  }
-
-  thead th {
-    font-family: 'DM Mono', monospace;
-    font-size: 0.6rem;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    padding: 0.75rem 1rem;
-    text-align: left;
-    white-space: nowrap;
-  }
-
-  tbody tr { border-bottom: 1px solid var(--border); }
-  tbody tr:last-child { border-bottom: none; }
-  tbody tr:nth-child(even) { background: var(--cream); }
-
-  tbody td {
-    padding: 0.75rem 1rem;
-    vertical-align: middle;
-  }
-
-  .td-name { font-weight: 500; }
-
-  .td-input {
+  .person-card-top {
     display: flex;
-    border: 1px solid var(--border);
-    background: var(--white);
-    transition: border-color 0.15s;
-  }
-
-  .td-input:focus-within { border-color: var(--orange); }
-
-  .td-input input {
-    border: none;
-    outline: none;
-    background: transparent;
-    font-family: 'DM Mono', monospace;
-    font-size: 0.85rem;
-    padding: 0.35rem 0.5rem;
-    width: 70px;
-    color: var(--black);
-  }
-
-  .td-unit {
-    font-family: 'DM Mono', monospace;
-    font-size: 0.6rem;
-    color: var(--mid);
-    padding: 0 0.5rem;
-    display: flex;
+    justify-content: space-between;
     align-items: center;
-    background: var(--border);
-    border-left: 1px solid var(--border);
-    white-space: nowrap;
+    margin-bottom: 0.9rem;
   }
 
-  .td-cost {
-    font-family: 'DM Mono', monospace;
-    font-size: 0.85rem;
-    color: var(--orange);
-    white-space: nowrap;
+  .person-card-name {
+    font-weight: 500;
+    font-size: 0.9rem;
   }
 
-  .td-waste {
-    font-family: 'DM Mono', monospace;
-    font-size: 0.85rem;
-    color: var(--black);
+  .person-card-costs {
+    text-align: right;
   }
 
-  tfoot tr { background: var(--black); }
-
-  tfoot td {
-    padding: 0.85rem 1rem;
-    font-family: 'DM Mono', monospace;
-    font-size: 0.8rem;
-    color: var(--cream);
-    white-space: nowrap;
-  }
-
-  tfoot td.total-val {
+  .person-card-total {
     font-family: 'Bebas Neue', sans-serif;
     font-size: 1.4rem;
-    color: var(--orange);
+    color: var(--black);
     letter-spacing: 0.04em;
+    line-height: 1;
   }
+
+  .person-card-waste {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--orange);
+    margin-top: 0.1rem;
+  }
+
+  .person-card-inputs {
+    display: flex;
+    gap: 0.5rem;
+  }
+
+  .person-card-field {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  .person-card-field label {
+    font-size: 0.65rem;
+    font-weight: 400;
+    color: var(--mid);
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+
+  .card-input-wrap {
+    display: flex;
+    border: 1.5px solid var(--border);
+    background: var(--cream);
+  }
+
+  .card-input-wrap:focus-within { border-color: var(--orange); }
+
+  .card-input-wrap input {
+    background: transparent;
+    border: none;
+    outline: none;
+    color: var(--black);
+    font-family: 'DM Mono', monospace;
+    font-size: 0.95rem;
+    padding: 0.5rem 0.6rem;
+    flex: 1;
+    min-width: 0;
+    -moz-appearance: textfield;
+  }
+
+  .card-input-wrap input::-webkit-outer-spin-button,
+  .card-input-wrap input::-webkit-inner-spin-button { -webkit-appearance: none; }
+
+  .card-unit {
+    padding: 0.5rem 0.5rem;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.58rem;
+    color: var(--mid);
+    background: var(--border);
+    border-left: 1.5px solid var(--border);
+    display: flex;
+    align-items: center;
+    white-space: nowrap;
+  }
+
+  .btn-remove-card {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--border);
+    font-size: 1.1rem;
+    padding: 0;
+    margin-left: 0.5rem;
+    transition: color 0.15s;
+    -webkit-tap-highlight-color: transparent;
+    align-self: flex-start;
+  }
+
+  .btn-remove-card:active { color: var(--orange); }
 
   /* ADD PERSON */
   .add-person-row {
     background: var(--cream);
     border: 2px solid var(--black);
     border-top: none;
-    padding: 1rem 1.5rem;
+    padding: 1rem 1.25rem;
     display: flex;
-    gap: 0.75rem;
-    align-items: center;
-    flex-wrap: wrap;
+    gap: 0.5rem;
     margin-bottom: 2px;
   }
 
@@ -584,143 +642,110 @@
     border: 2px solid var(--black);
     color: var(--black);
     font-family: 'DM Sans', sans-serif;
-    padding: 0.65rem 0.9rem;
+    padding: 0.7rem 0.9rem;
     font-size: 0.9rem;
-    min-width: 140px;
     flex: 1;
   }
-
-  .add-person-row input[type="text"]:focus { border-color: var(--orange); }
 
   .btn-add {
     background: var(--black);
     color: var(--cream);
     border: 2px solid var(--black);
     font-family: 'DM Mono', monospace;
-    font-size: 0.72rem;
-    letter-spacing: 0.1em;
-    padding: 0.65rem 1.2rem;
+    font-size: 0.65rem;
+    letter-spacing: 0.08em;
+    padding: 0.7rem 1rem;
     cursor: pointer;
     white-space: nowrap;
+    -webkit-tap-highlight-color: transparent;
   }
 
-  .btn-add:hover { background: var(--orange); border-color: var(--orange); }
+  .btn-add:active { background: var(--orange); border-color: var(--orange); }
 
-  .btn-remove {
-    background: none;
-    border: none;
-    cursor: pointer;
-    color: var(--border);
-    font-size: 1rem;
-    padding: 0 0.25rem;
-    transition: color 0.15s;
-  }
-
-  .btn-remove:hover { color: var(--orange); }
-
-  /* RECALC */
-  .recalc-note {
-    font-size: 0.78rem;
-    color: var(--mid);
-    font-style: italic;
-    margin-bottom: 0.75rem;
-  }
-
-  /* INSIGHT */
-  .insight-block {
-    background: var(--green);
-    padding: 1.5rem;
-    margin-bottom: 2px;
-  }
-
-  .insight-block p {
-    font-size: 0.9rem;
-    color: var(--black);
-    line-height: 1.65;
-  }
-
-  .scenario-block {
+  /* PERSON TOTALS */
+  .person-totals {
     background: var(--black);
-    color: var(--cream);
-    padding: 1.5rem;
+    padding: 1.25rem;
     margin-bottom: 2px;
     display: flex;
-    gap: 1.5rem;
-    align-items: center;
-    flex-wrap: wrap;
+    flex-direction: column;
+    gap: 0.75rem;
   }
 
-  .scenario-label {
-    font-size: 0.82rem;
+  .person-total-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+  }
+
+  .person-total-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
     color: #888;
-    line-height: 1.5;
-    flex: 1;
-    min-width: 180px;
   }
 
-  .scenario-val {
+  .person-total-val {
     font-family: 'Bebas Neue', sans-serif;
-    font-size: 2.8rem;
-    color: var(--green);
+    font-size: 1.8rem;
+    color: var(--cream);
     letter-spacing: 0.04em;
-    white-space: nowrap;
+    line-height: 1;
   }
 
+  .person-total-val.accent { color: var(--orange); }
+  .person-total-val.green { color: var(--green); }
+
+  /* SCIENCE */
   .science {
     border: 2px solid var(--border);
-    padding: 1rem 1.2rem;
+    padding: 1rem 1.25rem;
     margin-bottom: 2px;
   }
 
-  .science p { font-size: 0.72rem; color: var(--mid); line-height: 1.6; }
+  .science p { font-size: 0.7rem; color: var(--mid); line-height: 1.6; }
 
+  /* CTA */
   .cta-block {
     background: var(--orange);
-    padding: 2rem 1.5rem;
+    padding: 1.75rem 1.25rem;
     text-align: center;
-    margin-bottom: 1.5rem;
+    margin-bottom: 1.25rem;
   }
 
   .cta-block h3 {
     font-family: 'Bebas Neue', sans-serif;
-    font-size: 2rem;
+    font-size: 1.8rem;
     color: var(--white);
     letter-spacing: 0.06em;
+    line-height: 1.05;
     margin-bottom: 0.6rem;
   }
 
-  .cta-block p { font-size: 0.85rem; color: rgba(255,255,255,0.75); margin-bottom: 1.2rem; }
+  .cta-block p { font-size: 0.83rem; color: rgba(255,255,255,0.75); margin-bottom: 1.2rem; line-height: 1.5; }
 
   .btn-cta {
+    display: inline-block;
     background: var(--black);
     color: var(--white);
     border: 2px solid var(--black);
     font-family: 'DM Mono', monospace;
-    font-size: 0.75rem;
-    letter-spacing: 0.12em;
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
     text-transform: uppercase;
-    padding: 1rem 2rem;
+    padding: 1rem 1.5rem;
     cursor: pointer;
-    display: inline-block;
-    transition: all 0.15s;
     text-decoration: none;
+    -webkit-tap-highlight-color: transparent;
   }
-
-  .btn-cta:hover { background: var(--cream); color: var(--black); }
 
   .footer {
     text-align: center;
-    font-size: 0.7rem;
+    font-size: 0.68rem;
     color: var(--mid);
-    padding: 1rem 0 2rem;
-  }
-
-  @media (max-width: 480px) {
-    h1 { font-size: 3rem; }
-    .numbers { grid-template-columns: 1fr; }
-    .num-cell.full { grid-column: 1; }
-    .scenario-block { flex-direction: column; gap: 0.5rem; }
-    thead th:nth-child(4), tbody td:nth-child(4) { display: none; }
+    padding: 0.75rem 0 2rem;
+    line-height: 1.6;
   }
 </style>
 </head>
@@ -731,11 +756,9 @@
 </div>
 
 <div class="hero">
-  <div class="hero-inner">
-    <div class="tag">Vergadercheck</div>
-    <h1>WAT KOST<br>VERGADEREN<br><em>ECHT?</em></h1>
-    <p class="hero-sub">Niet vaag, maar in euro's. Onderbouwd door onderzoek van Rogelberg, Gloria Mark en anderen.</p>
-  </div>
+  <div class="tag">Vergadercheck</div>
+  <h1>WAT KOST<br>VERGADEREN<br><em>ECHT?</em></h1>
+  <p class="hero-sub">Niet vaag. In euro's. Onderbouwd door onderzoek van Rogelberg en Gloria Mark.</p>
 </div>
 
 <main>
@@ -749,17 +772,17 @@
   <div class="section active" id="step-1">
     <div class="block-header">
       <div class="block-header-title">HOEVEEL WORDT ER VERGADERD?</div>
-      <div class="block-header-step">01 / 02</div>
+      <div class="block-header-step">01/02</div>
     </div>
     <div class="block-body">
-      <p class="block-desc">Vul in wat van toepassing is voor jouw team of afdeling. Schattingen zijn goed genoeg — de orde van grootte telt.</p>
+      <p class="block-desc">Schattingen zijn goed genoeg — de orde van grootte telt.</p>
       <div class="field-group">
         <div class="field">
           <label>Aantal teamleden
-            <small>Iedereen die regelmatig in meetings zit (incl. jezelf)</small>
+            <small>Iedereen die regelmatig in meetings zit</small>
           </label>
           <div class="input-wrap">
-            <input type="number" id="team-size" min="1" max="500" value="8" />
+            <input type="number" id="team-size" min="1" max="500" value="8" inputmode="numeric" />
             <div class="unit">personen</div>
           </div>
         </div>
@@ -768,17 +791,17 @@
             <small>Gemiddelde over je team — kenniswerker zit op 8–12</small>
           </label>
           <div class="input-wrap">
-            <input type="number" id="meetings-per-week" min="1" max="50" value="10" />
-            <div class="unit">meetings/week</div>
+            <input type="number" id="meetings-per-week" min="1" max="50" value="10" inputmode="numeric" />
+            <div class="unit">per week</div>
           </div>
         </div>
         <div class="field">
           <label>Gemiddelde duur per meeting
-            <small>Meest voorkomende duur in jouw organisatie</small>
+            <small>Meest voorkomende duur</small>
           </label>
           <div class="input-wrap">
-            <input type="number" id="meeting-duration" min="15" max="240" value="45" />
-            <div class="unit">minuten</div>
+            <input type="number" id="meeting-duration" min="15" max="240" value="45" inputmode="numeric" />
+            <div class="unit">min</div>
           </div>
         </div>
       </div>
@@ -792,28 +815,28 @@
   <div class="section" id="step-2">
     <div class="block-header">
       <div class="block-header-title">WAT KOST EEN UUR?</div>
-      <div class="block-header-step">02 / 02</div>
+      <div class="block-header-step">02/02</div>
     </div>
     <div class="block-body">
-      <p class="block-desc">We rekenen met de volledig beladen kost: bruto loon × 1.35 werkgeverslast. Geen verborgen parameters.</p>
+      <p class="block-desc">We rekenen met bruto loon × 1.35 werkgeverslast.</p>
       <div class="field-group">
         <div class="field">
           <label>Gemiddeld bruto maandloon
-            <small>Geef jouw beste schatting voor de functies die in meetings zitten</small>
+            <small>Jouw beste schatting voor de functies in meetings</small>
           </label>
           <div class="input-wrap">
-            <input type="number" id="monthly-salary" min="1000" max="20000" value="4200" />
-            <div class="unit">€ / maand</div>
+            <input type="number" id="monthly-salary" min="1000" max="20000" value="4200" inputmode="numeric" />
+            <div class="unit">€/mnd</div>
           </div>
         </div>
         <div class="field">
-          <label>% meetings dat je als nutteloos beschouwt
-            <small>Internationaal gemiddelde: 71% van managers vindt meetings onproductief. Wees eerlijk.</small>
+          <label>% meetings dat je eerlijk als nutteloos beschouwt
+            <small>71% van managers vindt meetings onproductief (HBR). Wees eerlijk.</small>
           </label>
           <div class="slider-wrap">
             <div class="slider-top">
               <div class="slider-big" id="waste-display">35%</div>
-              <div class="slider-ref">HBR / Rogelberg: gem. ~35%</div>
+              <div class="slider-ref">gem. ~35% (Rogelberg)</div>
             </div>
             <input type="range" id="waste-pct" min="5" max="90" value="35"
               oninput="document.getElementById('waste-display').textContent = this.value + '%'" />
@@ -836,7 +859,7 @@
 
     <div class="numbers">
       <div class="num-cell">
-        <div class="num-label">Vergadertijd / persoon / jaar</div>
+        <div class="num-label">Vergadertijd per persoon per jaar</div>
         <div class="num-val" id="res-hours">—</div>
         <div class="num-sub">uur per medewerker</div>
       </div>
@@ -845,7 +868,7 @@
         <div class="num-val" id="res-total-cost">—</div>
         <div class="num-sub">voor het volledige team per jaar</div>
       </div>
-      <div class="num-cell full">
+      <div class="num-cell highlight">
         <div class="num-label">Nutteloze vergaderkost — per jaar verbrand</div>
         <div class="num-val big" id="res-waste-cost">—</div>
         <div class="num-sub" id="res-waste-sub">Rechtstreeks uit je loonmassa</div>
@@ -855,40 +878,34 @@
     <!-- EMAIL GATE -->
     <div class="gate" id="email-gate">
       <h3>DE ECHTE KOST<br>LIGT <span>HOGER.</span></h3>
-      <p class="gate-intro">Contextswitching en herstelkosten zitten hier nog niet in. Onderzoek toont dat dit de zichtbare kost nog eens verdubbelt.<br><br>Achter je e-mailadres krijg je de volledige analyse — inclusief de verborgen kost én de optie om per teamlid exact te berekenen wat het vergaderen kost.</p>
+      <p class="gate-intro">Contextswitching en herstelkosten zitten hier nog niet in. Onderzoek toont dat dit de zichtbare kost nog eens verdubbelt.<br><br>Vul je e-mailadres in voor de volledige analyse — inclusief de verborgen kost én de optie om per teamlid te berekenen wat vergaderen kost.</p>
       <div class="gate-inputs">
-        <div class="gate-row">
-          <input type="text" id="user-name" placeholder="Voornaam" />
-          <input type="email" id="user-email" placeholder="Werk e-mailadres" />
-        </div>
-        <div class="gate-row">
-          <button class="btn btn-primary" style="flex:1;" onclick="submitEmail()">Toon mij de volledige analyse en de optie om dit per persoon te berekenen →</button>
-        </div>
+        <input type="text" id="user-name" placeholder="Voornaam" autocomplete="given-name" />
+        <input type="email" id="user-email" placeholder="Werk e-mailadres" autocomplete="email" inputmode="email" />
+        <button class="btn btn-primary" onclick="submitEmail()">Toon volledige analyse →</button>
       </div>
       <p id="email-error">Vul een geldig e-mailadres in.</p>
-      <p class="privacy">Geen spam, geen automatische nieuwsbrief. Je gegevens worden niet verkocht.</p>
+      <p class="privacy">Geen spam. Geen automatische nieuwsbrief. Je gegevens worden niet verkocht.</p>
     </div>
 
     <!-- FULL RESULTS -->
     <div id="full-results">
 
-      <!-- MODE TOGGLE -->
       <div class="mode-toggle">
-        <button class="toggle-btn active" id="toggle-avg" onclick="switchMode('avg')">Gemiddeld overzicht</button>
+        <button class="toggle-btn active" id="toggle-avg" onclick="switchMode('avg')">Teamoverzicht</button>
         <button class="toggle-btn" id="toggle-person" onclick="switchMode('person')">Per teamlid</button>
       </div>
 
       <!-- AVERAGE VIEW -->
       <div id="avg-view">
         <div class="block-header" style="margin-bottom:2px;">
-          <div class="block-header-title">ANALYSE</div>
-          <div class="block-header-step">GEMIDDELD</div>
+          <div class="block-header-title">VOLLEDIGE ANALYSE</div>
         </div>
 
         <div class="bars-block">
-          <div class="num-label" style="margin-bottom:1.2rem;">Jaarlijkse vergaderkost — uitsplitsing</div>
+          <div class="num-label" style="margin-bottom:1rem;">Jaarlijkse vergaderkost — uitsplitsing</div>
           <div class="bar-row">
-            <div class="bar-name">Productieve kost</div>
+            <div class="bar-name">Productief</div>
             <div class="bar-track"><div class="bar-fill prod" id="bar-prod"></div></div>
             <div class="bar-amt" id="bar-prod-amt">—</div>
           </div>
@@ -902,7 +919,7 @@
             <div class="bar-track"><div class="bar-fill hidden" id="bar-hidden"></div></div>
             <div class="bar-amt" id="bar-hidden-amt">—</div>
           </div>
-          <p style="font-size:0.7rem;color:var(--mid);margin-top:0.75rem;">* Contextswitching + cognitieve herstelkosten (Gloria Mark, UC Irvine / Rogelberg)</p>
+          <p style="font-size:0.68rem;color:var(--mid);margin-top:0.6rem;line-height:1.5;">* Contextswitching + cognitieve herstelkosten<br>(Gloria Mark, UC Irvine / Rogelberg)</p>
         </div>
 
         <div class="numbers" style="margin-bottom:2px;">
@@ -920,7 +937,7 @@
 
         <div class="scenario-block">
           <div class="scenario-label">
-            <strong style="color:var(--cream);">Wat als 20% van de nutteloze meetings wegvalt?</strong><br>
+            <strong>Wat als 20% van de nutteloze meetings wegvalt?</strong><br>
             Vrijgemaakt per jaar — herinvesteerbaar in wat echt telt.
           </div>
           <div class="scenario-val" id="res-scenario">—</div>
@@ -934,65 +951,47 @@
       <!-- PER PERSON VIEW -->
       <div id="per-person-view">
         <div class="block-header" style="margin-bottom:2px;">
-          <div class="block-header-title">ANALYSE PER TEAMLID</div>
-          <div class="block-header-step">GEDETAILLEERD</div>
+          <div class="block-header-title">PER TEAMLID</div>
         </div>
 
-        <div style="background:var(--white);border:2px solid var(--black);border-top:none;padding:1.2rem 1.5rem;margin-bottom:2px;">
-          <p style="font-size:0.85rem;color:var(--mid);line-height:1.6;">Pas per teamlid het bruto maandloon en het aantal vergaderuren per week aan. De tool berekent de individuele kost — inclusief contextswitching en verborgen kost.</p>
+        <div style="background:var(--white);border:2px solid var(--black);border-top:none;padding:1rem 1.25rem;margin-bottom:2px;">
+          <p style="font-size:0.83rem;color:var(--mid);line-height:1.6;">Pas per teamlid het loon en de vergaderuren aan. De kost herberekent live.</p>
         </div>
+
+        <div class="person-cards" id="person-cards"></div>
 
         <div class="add-person-row">
           <input type="text" id="new-person-name" placeholder="Naam teamlid" />
           <button class="btn-add" onclick="addPerson()">+ Voeg toe</button>
         </div>
 
-        <div class="person-table-wrap">
-          <table>
-            <thead>
-              <tr>
-                <th>Naam</th>
-                <th>Loon / maand</th>
-                <th>Meetinguren / week</th>
-                <th>Jaarkost meetings</th>
-                <th>Waste</th>
-                <th></th>
-              </tr>
-            </thead>
-            <tbody id="person-tbody"></tbody>
-            <tfoot>
-              <tr>
-                <td colspan="3" style="color:#aaa;font-size:0.65rem;letter-spacing:0.15em;">TEAM TOTAAL</td>
-                <td class="total-val" id="person-total-cost">—</td>
-                <td class="total-val" id="person-total-waste" style="color:var(--orange);">—</td>
-                <td></td>
-              </tr>
-            </tfoot>
-          </table>
-        </div>
-
-        <div class="numbers" style="margin-bottom:2px;margin-top:2px;">
-          <div class="num-cell">
-            <div class="num-label">Context-switch kost team</div>
-            <div class="num-val" id="person-switch">—</div>
-            <div class="num-sub">gebaseerd op individuele meetingfrequentie</div>
+        <div class="person-totals" id="person-totals">
+          <div class="person-total-row">
+            <div class="person-total-label">Jaarkost meetings team</div>
+            <div class="person-total-val" id="person-total-cost">—</div>
           </div>
-          <div class="num-cell">
-            <div class="num-label">Totale reële kost team</div>
-            <div class="num-val" id="person-real">—</div>
-            <div class="num-sub">incl. verborgen kost</div>
+          <div class="person-total-row">
+            <div class="person-total-label">Waste</div>
+            <div class="person-total-val accent" id="person-total-waste">—</div>
           </div>
-          <div class="num-cell full">
-            <div class="num-label">Potentiële besparing bij 20% minder waste</div>
-            <div class="num-val big" id="person-scenario">—</div>
-            <div class="num-sub">vrijgemaakt per jaar</div>
+          <div class="person-total-row">
+            <div class="person-total-label">Context-switch kost</div>
+            <div class="person-total-val" id="person-switch">—</div>
+          </div>
+          <div class="person-total-row">
+            <div class="person-total-label">Totale reële kost</div>
+            <div class="person-total-val" id="person-real">—</div>
+          </div>
+          <div class="person-total-row">
+            <div class="person-total-label">Besparing bij 20% minder waste</div>
+            <div class="person-total-val green" id="person-scenario">—</div>
           </div>
         </div>
       </div>
 
       <!-- SHARED BOTTOM -->
       <div class="science">
-        <p><strong>Onderbouwing:</strong> Vergaderkost = bruto uurloon × 1.35 werkgeverslast × totale vergadertijd (46 werkweken). Context-switch kost gebaseerd op Gloria Mark (UC Irvine): gemiddeld 23 minuten om na een onderbreking terug in diepe focus te komen. Verborgen kostmultiplier (0.5× bovenop de waste) gebaseerd op Rogelberg et al. over cognitieve en innovatiekosten van meeting-overload. % nutteloze meetings: standaard 35%; 71% van managers vindt meetings onproductief (Harvard Business Review / Rogelberg 2019).</p>
+        <p><strong>Onderbouwing:</strong> Vergaderkost = bruto uurloon × 1.35 werkgeverslast × vergadertijd (46 werkweken). Context-switch kost: Gloria Mark (UC Irvine), 23 minuten herstel per onderbreking. Verborgen kostmultiplier (0.5×) gebaseerd op Rogelberg et al. over cognitieve kosten van meeting-overload. Standaard waste 35%; 71% van managers vindt meetings onproductief (HBR / Rogelberg 2019).</p>
       </div>
 
       <div class="cta-block">
@@ -1007,7 +1006,7 @@
     </div>
   </div>
 
-  <div class="footer">Prowes — Viktorien Banić &nbsp;·&nbsp; Berekeningen gebaseerd op wetenschappelijk onderzoek</div>
+  <div class="footer">Prowes — Viktorien Banić<br>Berekeningen gebaseerd op wetenschappelijk onderzoek</div>
 </main>
 
 <script>
@@ -1016,18 +1015,9 @@
 
   const fmt = n => '€\u202F' + Math.round(n).toLocaleString('nl-BE');
 
-  function hrRate(monthlySalary) {
-    return (monthlySalary * 13.92 * 1.35) / (52 * 38);
-  }
-
-  function personYearlyCost(salary, meetingHoursPerWeek) {
-    return hrRate(salary) * meetingHoursPerWeek * 46;
-  }
-
-  function personSwitchCost(salary, meetingsPerWeek) {
-    const mpY = meetingsPerWeek * 46;
-    return hrRate(salary) * (mpY * 23 / 60);
-  }
+  function hrRate(s) { return (s * 13.92 * 1.35) / (52 * 38); }
+  function personYearlyCost(s, h) { return hrRate(s) * h * 46; }
+  function personSwitchCost(s, mpw) { return hrRate(s) * (mpw * 46 * 23 / 60); }
 
   function goToStep(n) {
     document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
@@ -1061,23 +1051,22 @@
     const realCost = totalCost + hiddenCost + switchCost;
     const scenario = (wasteCost + switchCost) * 0.2;
 
-    d = { teamSize, mpw, dur, salary, wastePct, yearlyH, totalCost, wasteCost, prodCost, switchCost, hiddenCost, realCost, scenario, rate, mpY };
+    d = { teamSize, mpw, dur, salary, wastePct, yearlyH, weeklyH, totalCost, wasteCost, prodCost, switchCost, hiddenCost, realCost, scenario, rate, mpY };
 
-    // Pre-populate persons with average data
     persons = [];
     for (let i = 1; i <= teamSize; i++) {
-      persons.push({ name: 'Teamlid ' + i, salary: salary, meetingH: weeklyH });
+      persons.push({ name: 'Teamlid ' + i, salary, meetingH: weeklyH });
     }
 
-    // Show results
     document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
-    ['seg-1','seg-2'].forEach(id => { document.getElementById(id).classList.remove('active'); document.getElementById(id).classList.add('done'); });
-    document.getElementById('seg-3').classList.add('active');
+    document.getElementById('seg-1').className = 'step-seg done';
+    document.getElementById('seg-2').className = 'step-seg done';
+    document.getElementById('seg-3').className = 'step-seg active';
     document.getElementById('results').style.display = 'block';
 
-    document.getElementById('res-hours').textContent = Math.round(d.yearlyH) + ' uur';
-    document.getElementById('res-total-cost').textContent = fmt(d.totalCost);
-    document.getElementById('res-waste-cost').textContent = fmt(d.wasteCost);
+    document.getElementById('res-hours').textContent = Math.round(yearlyH) + ' uur';
+    document.getElementById('res-total-cost').textContent = fmt(totalCost);
+    document.getElementById('res-waste-cost').textContent = fmt(wasteCost);
     document.getElementById('res-waste-sub').textContent = `${Math.round(wastePct * 100)}% van de vergadertijd — elk jaar opnieuw`;
 
     document.getElementById('results').scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -1110,7 +1099,7 @@
     }).catch(err => console.error('Formspree error:', err));
 
     fillAvgView();
-    renderPersonTable();
+    renderPersonCards();
     document.getElementById('full-results').scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
 
@@ -1121,65 +1110,72 @@
       document.getElementById('bar-waste').style.width = (d.wasteCost / total * 100) + '%';
       document.getElementById('bar-hidden').style.width = ((d.hiddenCost + d.switchCost) / total * 100) + '%';
     }, 80);
-
     document.getElementById('bar-prod-amt').textContent = fmt(d.prodCost);
     document.getElementById('bar-waste-amt').textContent = fmt(d.wasteCost);
     document.getElementById('bar-hidden-amt').textContent = fmt(d.hiddenCost + d.switchCost);
     document.getElementById('res-switch').textContent = fmt(d.switchCost);
     document.getElementById('res-real').textContent = fmt(d.realCost);
     document.getElementById('res-scenario').textContent = fmt(d.scenario);
-
     const switchHpp = Math.round(d.mpY * 23 / 60);
     document.getElementById('insight-text').textContent =
       `Elke meeting onderbreekt. Gloria Mark (UC Irvine) toonde aan dat het gemiddeld 23 minuten kost om daarna terug op volle concentratie te zitten. Met ${Math.round(d.mpY)} meetings per persoon per jaar verliest elk teamlid ${switchHpp} extra uren aan herstel — boven op de meetingduur zelf. De vraag is niet of vergaderen kost. De vraag is of het oplevert wat het kost.`;
   }
 
-  function renderPersonTable() {
-    const tbody = document.getElementById('person-tbody');
-    tbody.innerHTML = '';
-
+  function renderPersonCards() {
+    const container = document.getElementById('person-cards');
+    container.innerHTML = '';
     let totalCost = 0, totalWaste = 0, totalSwitch = 0;
 
     persons.forEach((p, idx) => {
       const yearlyCost = personYearlyCost(p.salary, p.meetingH);
       const waste = yearlyCost * d.wastePct;
-      const mpwEst = p.meetingH / (d.dur / 60); // meetings/week estimate
+      const mpwEst = p.meetingH / (d.dur / 60);
       const sw = personSwitchCost(p.salary, mpwEst);
       totalCost += yearlyCost;
       totalWaste += waste;
       totalSwitch += sw;
 
-      const tr = document.createElement('tr');
-      tr.innerHTML = `
-        <td class="td-name">${p.name}</td>
-        <td>
-          <div class="td-input">
-            <input type="number" value="${p.salary}" min="1000" max="20000"
-              onchange="updatePerson(${idx}, 'salary', this.value)" />
-            <div class="td-unit">€/mnd</div>
+      const card = document.createElement('div');
+      card.className = 'person-card';
+      card.innerHTML = `
+        <div class="person-card-top">
+          <div class="person-card-name">${p.name}</div>
+          <div style="display:flex;align-items:flex-start;gap:0.3rem;">
+            <div class="person-card-costs">
+              <div class="person-card-total">${fmt(yearlyCost)}</div>
+              <div class="person-card-waste">waste: ${fmt(waste)}</div>
+            </div>
+            <button class="btn-remove-card" onclick="removePerson(${idx})">×</button>
           </div>
-        </td>
-        <td>
-          <div class="td-input">
-            <input type="number" value="${p.meetingH.toFixed(1)}" min="0.5" max="40" step="0.5"
-              onchange="updatePerson(${idx}, 'meetingH', this.value)" />
-            <div class="td-unit">u/week</div>
+        </div>
+        <div class="person-card-inputs">
+          <div class="person-card-field">
+            <label>Loon / maand</label>
+            <div class="card-input-wrap">
+              <input type="number" value="${p.salary}" min="1000" max="20000" inputmode="numeric"
+                onchange="updatePerson(${idx}, 'salary', this.value)" />
+              <div class="card-unit">€</div>
+            </div>
           </div>
-        </td>
-        <td class="td-cost">${fmt(yearlyCost)}</td>
-        <td class="td-waste">${fmt(waste)}</td>
-        <td><button class="btn-remove" onclick="removePerson(${idx})" title="Verwijder">×</button></td>
+          <div class="person-card-field">
+            <label>Meeting-uren/week</label>
+            <div class="card-input-wrap">
+              <input type="number" value="${p.meetingH.toFixed(1)}" min="0.5" max="40" step="0.5" inputmode="decimal"
+                onchange="updatePerson(${idx}, 'meetingH', this.value)" />
+              <div class="card-unit">u</div>
+            </div>
+          </div>
+        </div>
       `;
-      tbody.appendChild(tr);
+      container.appendChild(card);
     });
-
-    document.getElementById('person-total-cost').textContent = fmt(totalCost);
-    document.getElementById('person-total-waste').textContent = fmt(totalWaste);
 
     const hidden = totalWaste * 0.5;
     const real = totalCost + hidden + totalSwitch;
     const scenario = (totalWaste + totalSwitch) * 0.2;
 
+    document.getElementById('person-total-cost').textContent = fmt(totalCost);
+    document.getElementById('person-total-waste').textContent = fmt(totalWaste);
     document.getElementById('person-switch').textContent = fmt(totalSwitch);
     document.getElementById('person-real').textContent = fmt(real);
     document.getElementById('person-scenario').textContent = fmt(scenario);
@@ -1187,20 +1183,20 @@
 
   function updatePerson(idx, field, val) {
     persons[idx][field] = parseFloat(val) || persons[idx][field];
-    renderPersonTable();
+    renderPersonCards();
   }
 
   function removePerson(idx) {
     persons.splice(idx, 1);
-    renderPersonTable();
+    renderPersonCards();
   }
 
   function addPerson() {
     const nameInput = document.getElementById('new-person-name');
     const name = nameInput.value.trim() || ('Teamlid ' + (persons.length + 1));
-    persons.push({ name, salary: d.salary, meetingH: d.yearlyH / 46 });
+    persons.push({ name, salary: d.salary, meetingH: d.weeklyH });
     nameInput.value = '';
-    renderPersonTable();
+    renderPersonCards();
   }
 
   function switchMode(mode) {
@@ -1208,7 +1204,7 @@
     document.getElementById('toggle-person').classList.toggle('active', mode === 'person');
     document.getElementById('avg-view').style.display = mode === 'avg' ? 'block' : 'none';
     document.getElementById('per-person-view').style.display = mode === 'person' ? 'block' : 'none';
-    if (mode === 'person') renderPersonTable();
+    if (mode === 'person') renderPersonCards();
   }
 
   function resetCalc() {
