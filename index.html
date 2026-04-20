@@ -431,7 +431,7 @@
   }
 
   .toggle-btn.active { background: var(--orange); color: var(--white); }
-  .toggle-btn:not(.active) { background: #222; color: #666; }
+  .toggle-btn:not(.active) { background: var(--cream); color: var(--mid); border-top: 2px solid var(--black); }
 
   /* BARS */
   .bars-block {
@@ -758,7 +758,7 @@
 <div class="hero">
   <div class="tag">Vergadercheck</div>
   <h1>WAT KOST<br>VERGADEREN<br><em>ECHT?</em></h1>
-  <p class="hero-sub">Niet vaag maar in euro's. Onderbouwd door onderzoek van Rogelberg en Gloria Mark.</p>
+  <p class="hero-sub">Niet vaag. In euro's. Onderbouwd door onderzoek van Rogelberg en Gloria Mark.</p>
 </div>
 
 <main>
@@ -858,27 +858,17 @@
     </div>
 
     <div class="numbers">
-      <div class="num-cell">
-        <div class="num-label">Vergadertijd per persoon per jaar</div>
-        <div class="num-val" id="res-hours">—</div>
-        <div class="num-sub">uur per medewerker</div>
-      </div>
-      <div class="num-cell">
-        <div class="num-label">Directe loonkost vergaderingen</div>
-        <div class="num-val" id="res-total-cost">—</div>
-        <div class="num-sub">voor het volledige team per jaar</div>
-      </div>
       <div class="num-cell highlight">
-        <div class="num-label">Nutteloze vergaderkost — per jaar verbrand</div>
-        <div class="num-val big" id="res-waste-cost">—</div>
-        <div class="num-sub" id="res-waste-sub">Rechtstreeks uit je loonmassa</div>
+        <div class="num-label">Jouw team betaalt jaarlijks aan vergaderingen</div>
+        <div class="num-val big" id="res-total-cost">—</div>
+        <div class="num-sub">Directe loonkost — enkel wat zichtbaar is</div>
       </div>
     </div>
 
     <!-- EMAIL GATE -->
     <div class="gate" id="email-gate">
       <h3>DE ECHTE KOST<br>LIGT <span>HOGER.</span></h3>
-      <p class="gate-intro">Contextswitching en herstelkosten zitten hier nog niet in. Onderzoek toont dat dit de zichtbare kost nog eens verdubbelt.<br><br>Vul je e-mailadres in voor de volledige analyse — inclusief de verborgen kost én de optie om per teamlid te berekenen wat vergaderen kost.</p>
+      <p class="gate-intro">Dat is wat zichtbaar is. De echte kost ligt hoger — contextswitching en herstelkosten komen daar nog bovenop en verdubbelen dit getal volgens onderzoek.<br><br>Vul je e-mailadres in voor de volledige uitsplitsing — inclusief verborgen kost, waste in euro's én de optie om per teamlid te berekenen wat vergaderen kost.</p>
       <div class="gate-inputs">
         <input type="text" id="user-name" placeholder="Voornaam" autocomplete="given-name" />
         <input type="email" id="user-email" placeholder="Werk e-mailadres" autocomplete="email" inputmode="email" />
@@ -887,6 +877,10 @@
       <p id="email-error">Vul een geldig e-mailadres in.</p>
       <p class="privacy">Geen spam. Geen automatische nieuwsbrief. Je gegevens worden niet verkocht.</p>
     </div>
+
+    <!-- hidden elements for JS compatibility -->
+    <span id="res-hours" style="display:none"></span>
+    <span id="res-waste-cost" style="display:none"></span>
 
     <!-- FULL RESULTS -->
     <div id="full-results">
@@ -997,7 +991,7 @@
       <div class="cta-block">
         <h3>MEETINGS KOSTEN JE MEER DAN JE DENKT.</h3>
         <p>Prowes helpt teamleads beslissen wat overleg verdient en wat niet — zodat meetings weer leiden tot actie.</p>
-        <a href="https://www.instagram.com/prowes_vergaderen" target="_blank" class="btn-cta">Ontdek hoe Prowes helpt →</a>
+        <a href="https://prowes.be" target="_blank" class="btn-cta">Ontdek hoe Prowes helpt →</a>
       </div>
     </div>
 
