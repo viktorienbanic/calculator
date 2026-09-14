@@ -835,10 +835,10 @@
           </label>
           <div class="slider-wrap">
             <div class="slider-top">
-              <div class="slider-big" id="waste-display">35%</div>
-              <div class="slider-ref">gem. ~35% (Rogelberg)</div>
+              <div class="slider-big" id="waste-display">30%</div>
+              <div class="slider-ref">gem. ~30% (Rogelberg & Otter.ai, 2022)</div>
             </div>
-            <input type="range" id="waste-pct" min="5" max="90" value="35"
+            <input type="range" id="waste-pct" min="5" max="90" value="30"
               oninput="document.getElementById('waste-display').textContent = this.value + '%'" />
           </div>
         </div>
@@ -857,18 +857,10 @@
       <div class="block-header-step">RESULTAAT</div>
     </div>
 
-    <div class="numbers">
-      <div class="num-cell highlight">
-        <div class="num-label">Jouw team betaalt jaarlijks aan vergaderingen</div>
-        <div class="num-val big" id="res-total-cost">—</div>
-        <div class="num-sub">Directe loonkost — enkel wat zichtbaar is</div>
-      </div>
-    </div>
-
     <!-- EMAIL GATE -->
     <div class="gate" id="email-gate">
-      <h3>DE ECHTE KOST<br>LIGT <span>HOGER.</span></h3>
-      <p class="gate-intro">Dat is wat zichtbaar is. De echte kost ligt hoger — contextswitching en herstelkosten komen daar nog bovenop en verdubbelen dit getal volgens onderzoek.<br><br>Vul je e-mailadres in voor de volledige uitsplitsing — inclusief verborgen kost, waste in euro's én de optie om per teamlid te berekenen wat vergaderen kost.</p>
+      <h3>WAT KOST<br>VERGADEREN <span>JOUW TEAM?</span></h3>
+      <p class="gate-intro">Loonkost, waste in euro's, contextswitching, verborgen kost — en de optie om per teamlid exact te berekenen wat vergaderen kost.<br><br>Vul je gegevens in en ontvang de volledige analyse.</p>
       <div class="gate-inputs">
         <input type="text" id="user-name" placeholder="Voornaam" autocomplete="given-name" />
         <input type="email" id="user-email" placeholder="Werk e-mailadres" autocomplete="email" inputmode="email" />
@@ -881,6 +873,7 @@
     <!-- hidden elements for JS compatibility -->
     <span id="res-hours" style="display:none"></span>
     <span id="res-waste-cost" style="display:none"></span>
+    <span id="res-total-cost" style="display:none"></span>
 
     <!-- FULL RESULTS -->
     <div id="full-results">
@@ -985,13 +978,13 @@
 
       <!-- SHARED BOTTOM -->
       <div class="science">
-        <p><strong>Onderbouwing:</strong> Vergaderkost = bruto uurloon × 1.35 werkgeverslast × vergadertijd (46 werkweken). Context-switch kost: Gloria Mark (UC Irvine), 23 minuten herstel per onderbreking. Verborgen kostmultiplier (0.5×) gebaseerd op Rogelberg et al. over cognitieve kosten van meeting-overload. Standaard waste 35%; 71% van managers vindt meetings onproductief (HBR / Rogelberg 2019).</p>
+        <p><strong>Onderbouwing:</strong> Vergaderkost = bruto uurloon × 1.35 werkgeverslast × vergadertijd (46 werkweken). Context-switch kost: Gloria Mark (UC Irvine), 23 minuten herstel per onderbreking. Verborgen kostmultiplier (0.5×) gebaseerd op Rogelberg et al. over cognitieve kosten van meeting-overload. Standaard waste 30% gebaseerd op Rogelberg & Otter.ai (2022, n=632): werknemers beschouwen gemiddeld ~5,7 van de 18 vergaderuren per week als onnodig. Het veelgeciteerde cijfer van 31 uur/maand onproductieve meetings komt van Atlassian, niet van Rogelberg.</p>
       </div>
 
       <div class="cta-block">
         <h3>MEETINGS KOSTEN JE MEER DAN JE DENKT.</h3>
         <p>Prowes helpt teamleads beslissen wat overleg verdient en wat niet — zodat meetings weer leiden tot actie.</p>
-        <a href="https://www.instagram.com/prowes_vergaderen?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" target="_blank" class="btn-cta">Ontdek hoe Prowes helpt →</a>
+        <a href="https://prowes.be" target="_blank" class="btn-cta">Ontdek hoe Prowes helpt →</a>
       </div>
     </div>
 
